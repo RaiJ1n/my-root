@@ -7,7 +7,7 @@ const user = reactive({
 });
 
 export function useAuth() {
-  // ✅ Save auth and user data to localStorage reactively
+  //  Save auth and user data to localStorage reactively
   const setAuth = (status, userData = null) => {
     isAuthenticated.value = status;
 
@@ -24,7 +24,7 @@ export function useAuth() {
     }
   };
 
-  // ✅ Get (reactively) user data and auth state from localStorage
+  //  Get (reactively) user data and auth state from localStorage
   const checkAuth = () => {
     const storedStatus = localStorage.getItem("isAuthenticated") === "true";
     const storedUser = JSON.parse(localStorage.getItem("userData"));
