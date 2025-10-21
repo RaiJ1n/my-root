@@ -24,4 +24,29 @@ const router = createRouter({
   ],
 })
 
+
+router.beforeEach(async (to, from, next) => {
+  await checkAuth();
+//   await Todo();
+  console.log(isAuthenticated.value);
+
+  if (to.meta.requiresAuth && !isAuthenticated.value) return next("/login");
+
+  if (
+    to.name === "login" &&
+    to.meta.requiresAuth === false &&
+    isAuthenticated.value
+  ) {
+    return next("/list");
+  }
+  if (
+    to.name === "register" &&
+    to.meta.requiresAuth === false &&
+    isAuthenticated.value
+  ) {
+    return next("/");
+  }
+  next();
+});
+
 export default router
