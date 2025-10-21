@@ -1,29 +1,45 @@
-import { ref } from "vue";
+import { ref, reactive } from "vue";
 
-const isAuthenticated = ref(!!localStorage.getItem("jwt")); // check on load
+const isAuthenticated = ref(false);
+const user = reactive({
+  name: "",
+  email: "",
+});
 
 export function useAuth() {
-  // ✅ Save token to localStorage
-  const login = (token) => {
-    localStorage.setItem("jwt", token);
-    isAuthenticated.value = true;
+  // ✅ Save auth and user data to localStorage reactively
+  const setAuth = (status, userData = null) => {
+    isAuthenticated.value = status;
+
+    if (status && userData) {
+      localStorage.setItem("isAuthenticated", "true");
+      localStorage.setItem("userData", JSON.stringify(userData));
+      user.name = userData.name;
+      user.email = userData.email;
+    } else {
+      localStorage.setItem("isAuthenticated", "false");
+      localStorage.removeItem("userData");
+      user.name = "";
+      user.email = "";
+    }
   };
 
-  // ✅ Remove token from localStorage
-  const logout = () => {
-    localStorage.removeItem("jwt");
-    isAuthenticated.value = false;
-  };
-
-  // ✅ Check if token exists in localStorage
+  // ✅ Get (reactively) user data and auth state from localStorage
   const checkAuth = () => {
-    isAuthenticated.value = !!localStorage.getItem("jwt");
+    const storedStatus = localStorage.getItem("isAuthenticated") === "true";
+    const storedUser = JSON.parse(localStorage.getItem("userData"));
+
+    isAuthenticated.value = storedStatus;
+    if (storedUser) {
+      user.name = storedUser.name;
+      user.email = storedUser.email;
+    }
   };
 
   return {
     isAuthenticated,
-    login,
-    logout,
+    user,
+    setAuth,
     checkAuth,
   };
 }

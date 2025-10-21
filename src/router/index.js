@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import DashBoard from '../views/dashboard.vue'
 import Login from '../views/login.vue'
 import Register from '../views/register.vue'
+import { useAuth } from '../store/authStore.js'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -10,43 +11,36 @@ const router = createRouter({
       path: '/',
       name: 'dashboard',
       component: DashBoard,
+      meta: { requiresAuth: true },
     },
     {
       path: '/login',
       name: 'login',
       component: Login,
+      meta: { requiresAuth: false },
     },
     {
       path: '/register',
       name: 'register',
       component: Register,
+      meta: { requiresAuth: false },
     },
   ],
 })
 
+router.beforeEach((to, from, next) => {
+  const { checkAuth, isAuthenticated } = useAuth()
+  checkAuth()
 
-router.beforeEach(async (to, from, next) => {
-  await checkAuth();
-//   await Todo();
-  console.log(isAuthenticated.value);
-
-  if (to.meta.requiresAuth && !isAuthenticated.value) return next("/login");
-
-  if (
-    to.name === "login" &&
-    to.meta.requiresAuth === false &&
-    isAuthenticated.value
-  ) {
-    return next("/list");
+  if (to.meta.requiresAuth && !isAuthenticated.value) {
+    return next('/login')
   }
-  if (
-    to.name === "register" &&
-    to.meta.requiresAuth === false &&
-    isAuthenticated.value
-  ) {
-    return next("/");
+
+  if ((to.name === 'login' || to.name === 'register') && isAuthenticated.value) {
+    return next('/')
   }
-  next();
-});
+
+  next()
+})
 
 export default router

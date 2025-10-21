@@ -1,44 +1,41 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center  px-4">
-    <div class="w-full max-w-md  p-6 rounded-lg shadow-md">
-      <h1 class="text-3xl font-bold text-center mb-6">Login</h1>
+  <div class="flex items-center justify-center min-h-screen bg-gray-100">
+    <div class="bg-white p-8 rounded-2xl shadow-md w-full max-w-md">
+      <h1 class="text-3xl font-bold mb-6 text-center">Login</h1>
 
-      <form @submit.prevent="submitForm" class="space-y-4">
-        <!-- Email Input -->
-        <div>
-          <label class="block mb-1 font-medium">Email</label>
+      <form @submit.prevent="login">
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-1">Email</label>
           <input
-            v-model="email"
             type="email"
+            v-model="email"
             placeholder="Enter your email"
-            class="w-full border px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
+            class="w-full p-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
             required
           />
         </div>
 
-        <!-- Password Input -->
-        <div>
-          <label class="block mb-1 font-medium">Password</label>
+        <div class="mb-6">
+          <label class="block text-gray-700 mb-1">Password</label>
           <input
-            v-model="password"
             type="password"
+            v-model="password"
             placeholder="Enter your password"
-            class="w-full border px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
+            class="w-full p-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
             required
           />
         </div>
 
-        <!-- Submit Button -->
         <button
           type="submit"
-          class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
+          class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition"
         >
           Login
         </button>
 
-        <p class="text-sm text-center text-gray-600 mt-2">
-          Don't have an account?
-          <a href="#" class="text-blue-600 hover:underline">Register</a>
+        <p class="mt-4 text-center text-sm text-gray-600">
+          Don’t have an account?
+          <router-link to="/register" class="text-blue-500 hover:underline">Register</router-link>
         </p>
       </form>
     </div>
@@ -46,16 +43,26 @@
 </template>
 
 <script setup>
-import { ref, defineEmits } from "vue";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { useAuth } from "../store/authStore.js";
 
-// Reusable reactive form state
 const email = ref("");
 const password = ref("");
+const router = useRouter();
+const { setAuth, checkAuth } = useAuth();
 
-// Emit submit event so parent can handle the data
-const emit = defineEmits(["submit"]);
+checkAuth();
 
-const submitForm = () => {
-  emit("submit", { email: email.value, password: password.value });
+const login = () => {
+  const storedUser = JSON.parse(localStorage.getItem("userData"));
+
+  if (storedUser && email.value === storedUser.email && password.value === storedUser.password) {
+    setAuth(true, storedUser);
+    alert("Login successful!");
+    router.push("/");
+  } else {
+    alert("Invalid credentials!");
+  }
 };
 </script>
