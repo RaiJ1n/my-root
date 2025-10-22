@@ -3,6 +3,7 @@ import DashBoard from '../views/dashboard.vue'
 import Login from '../views/login.vue'
 import Register from '../views/register.vue'
 import { useAuth } from '../store/authStore.js'
+import Profile from '../views/profile.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,6 +25,12 @@ const router = createRouter({
       name: 'register',
       component: Register,
       meta: { requiresAuth: false },
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: Profile,
+      meta: { requiresAuth: true },
     },
   ],
 })

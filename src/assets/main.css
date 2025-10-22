@@ -1,1 +1,59 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+
+/* Desktop-first body background handled by App.vue classes */
+
+/* Smooth scroll and animation feel */
+html {
+  scroll-behavior: smooth;
+}
+
+main {
+  animation: fadeIn 0.4s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Modal styles */
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.153);
+  z-index: 998;
+}
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 700px;
+  width: calc(100% - 2rem);
+  z-index: 999;
+}
+
+/* Desktop card defaults (keeps things centered at 1100px) */
+/* .desktop-container {
+  width: 1100px;
+  margin: 0 auto;
+} */
+
+/* Responsive safety: allow proper behavior under ~1000px */
+@media (max-width: 1100px) {
+  .desktop-container {
+    width: 92%;
+  }
+  .modal {
+    width: calc(100% - 2rem);
+  }
+}

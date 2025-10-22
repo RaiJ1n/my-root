@@ -1,53 +1,36 @@
 <template>
-  <div class="flex items-center justify-center min-h-screen bg-gray-100">
-    <div class="bg-white p-8 rounded-2xl shadow-md w-full max-w-md">
-      <h1 class="text-3xl font-bold mb-6 text-center">Register</h1>
+  <div class="min-h-screen flex items-center justify-center">
+    <div class="bg-white p-10 rounded-2xl shadow-md w-[700px]">
+      <h1 class="text-4xl font-bold mb-6 text-center">Create your account</h1>
 
-      <form @submit.prevent="register">
-        <div class="mb-4">
-          <label class="block text-gray-700 mb-1">Full Name</label>
-          <input
-            v-model="name"
-            type="text"
-            placeholder="Enter your full name"
-            class="w-full border px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
-            required
-          />
+      <form @submit.prevent="register" class="space-y-6">
+        <div>
+          <label class="block text-gray-700 mb-2 text-sm">Full Name</label>
+          <input v-model="name" type="text" required class="w-full px-4 py-3 border rounded-md" />
         </div>
 
-        <div class="mb-4">
-          <label class="block text-gray-700 mb-1">Email</label>
-          <input
-            v-model="email"
-            type="email"
-            placeholder="Enter your email"
-            class="w-full border px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
-            required
-          />
+        <div>
+          <label class="block text-gray-700 mb-2 text-sm">Email</label>
+          <input v-model="email" type="email" required class="w-full px-4 py-3 border rounded-md" />
         </div>
 
-        <div class="mb-6">
-          <label class="block text-gray-700 mb-1">Password</label>
+        <div>
+          <label class="block text-gray-700 mb-2 text-sm">Password</label>
           <input
             v-model="password"
             type="password"
-            placeholder="Enter your password"
-            class="w-full border px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
             required
+            class="w-full px-4 py-3 border rounded-md"
           />
         </div>
 
-        <button
-          type="submit"
-          class="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition"
-        >
-          Register
-        </button>
+        <div>
+          <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-md">Register</button>
+        </div>
 
-        <p class="mt-4 text-center text-sm text-gray-600">
-          Already have an account?
-          <router-link to="/login" class="text-blue-500 hover:underline">Login</router-link>
-        </p>
+        <div class="text-center mt-3">
+          <p>Already have an account? <router-link to="/login" class="text-sm text-blue-500">Login</router-link></p>
+        </div>
       </form>
     </div>
   </div>
@@ -78,3 +61,5 @@ const register = () => {
   router.push('/login')
 }
 </script>
+
+<style scoped></style>
