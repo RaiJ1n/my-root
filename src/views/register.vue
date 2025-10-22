@@ -54,27 +54,27 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import { useAuth } from "../store/authStore.js";
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
-const name = ref("");
-const email = ref("");
-const password = ref("");
-const router = useRouter();
-const { setAuth } = useAuth();
+const name = ref('')
+const email = ref('')
+const password = ref('')
+const router = useRouter()
 
 const register = () => {
   const newUser = {
     name: name.value,
     email: email.value,
     password: password.value,
-  };
+  }
 
-  localStorage.setItem("userData", JSON.stringify(newUser));
-  setAuth(true, newUser);
+  // Save user for later login
+  localStorage.setItem('userData', JSON.stringify(newUser))
 
-  alert("Registration successful!");
-  router.push("/");
-};
+  alert('Registration successful! Please log in.')
+
+  // push to login page
+  router.push('/login')
+}
 </script>
