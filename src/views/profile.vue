@@ -93,7 +93,7 @@ const saveChanges = () => {
     avatar: profile.avatar || '',
   }
 
-  // save to profile store (should persist to storage)
+  // save to profile store
   saveProfile(payload)
 
   // also sync with userData used for login/auth (preserve existing password)
