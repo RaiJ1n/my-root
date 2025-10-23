@@ -4,6 +4,7 @@
   >
     <!-- ✅ Logo -->
     <h1
+      image: logo
       class="text-3xl font-bold text-green-700 cursor-pointer hover:text-green-800 transition"
       @click="$router.push('/')"
     >
@@ -42,6 +43,7 @@
 import { useRouter } from 'vue-router'
 import { useProfile } from '@/store/profileStore.js'
 import { useAuth } from '@/store/authStore.js'
+import logo from '@/image/logoMyRoots.jpg'
 
 const { profile } = useProfile()
 const { setAuth } = useAuth()
